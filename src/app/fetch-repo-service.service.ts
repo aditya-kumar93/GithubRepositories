@@ -19,7 +19,7 @@ export class FetchRepoService {
     return this.http.get(getuserUrl+'/'+username);
   }
 
-  getUserRepos(){
+  getUserRepos() : Observable<any>{
     return this.http.get(getuserUrl+this.userName+'/repos');
   }
 }

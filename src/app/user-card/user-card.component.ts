@@ -21,7 +21,6 @@ export class UserCardComponent implements OnInit {
     .subscribe(
       _ => {
         this.userData = _;
-        debugger;
       },
       err => {
         console.log('something went terribly wrong');

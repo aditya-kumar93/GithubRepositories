@@ -9,8 +9,11 @@ import { FetchRepoService } from '../fetch-repo-service.service';
 export class RepositoryCardComponent implements OnInit {
 
   repos: any;
+  page = 1;
+  pageSize = 6;
   tokens = ['javascript', 'angular','c#','.NET Core', 'Ruby'];
   reposs = [1,2,3,4,5,6];
+  repos2 = [{key1: 1},{key1: 2},{ key1:3}]
   constructor(private fetchRepoService: FetchRepoService) {
   }
 
@@ -22,8 +25,7 @@ export class RepositoryCardComponent implements OnInit {
     this.fetchRepoService.getUserRepos()
     .subscribe(
       _ => {
-        this.repos = _;
-        debugger;
+       this.repos = _;
       },
       err => {
         console.log('something went terribly wrong');
