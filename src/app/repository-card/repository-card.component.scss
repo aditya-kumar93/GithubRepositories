@@ -1,0 +1,23 @@
+.card-container{
+    .card{
+        max-width: 30rem;
+        border: 1px solid black;
+        border-radius: 5px;
+        
+        .token{
+            margin: 4px 8px;
+            padding: 4px;
+            background-color: blue;
+            color: white;
+            font-weight: bold;
+            min-width: 5rem;
+            text-align: center;
+            border-radius: 5px;
+    
+            &:first-child{
+                margin-left: 0px;
+            }
+        }
+    }
+   
+}
