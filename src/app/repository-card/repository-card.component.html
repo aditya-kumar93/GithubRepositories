@@ -1,14 +1,11 @@
 <div class="card-container d-flex flex-wrap">
-    <div class="card p-1 mx-2 my-1 d-flex flex-wrap" *ngFor="let item of reposs">
-        <h5 class="my-2"> Repo Name</h5>
-        <div class="my-2">here goes the description</div>
+    <div class="card p-1 mx-2 my-1 d-flex flex-wrap" *ngFor="let item of repos">
+        <h5 class="my-2">{{item.name}}</h5>
+        <div class="my-2">{{item.description}}</div>
         <div class="my-2 d-flex flex-wrap">
-            <div class="token" *ngFor="let item of tokens">{{item}}</div>
+            <div class="token">{{item.languages}}</div>
         </div>
     </div>
 </div>
-<span *ngFor="let item of repos | slice: (page-1) * pageSize : page * pageSize + pageSize">
-    {{item.name}}
-</span>
 
-<ngb-pagination [collectionSize]="100" [(page)]="page" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+<ngb-pagination [collectionSize]="100" [(page)]="page" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="changePage($event)"></ngb-pagination>

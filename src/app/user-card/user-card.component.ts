@@ -13,11 +13,15 @@ export class UserCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserData();
+
+	  this.fetchRepoService.userName$.subscribe(_ => {
+
+		  this.getUserData();
+	  });
   }
 
   getUserData() {
-    this.fetchRepoService.getUserViaUserName('PatrickJS')
+    this.fetchRepoService.getUserViaUserName()
     .subscribe(
       _ => {
         this.userData = _;

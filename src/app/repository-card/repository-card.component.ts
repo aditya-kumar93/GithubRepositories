@@ -18,14 +18,24 @@ export class RepositoryCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRepoData();
+	  
+	this.fetchRepoService.userName$.subscribe(_ =>{
+
+		debugger;
+		this.getRepoData();
+	});
+  }
+  changePage(pageNumber: number){
+	  this.page = pageNumber;
+	  this.getRepoData();
   }
 
   getRepoData() {
-    this.fetchRepoService.getUserRepos()
+    this.fetchRepoService.getUserRepos(this.page)
     .subscribe(
       _ => {
        this.repos = _;
+	  // debugger;
       },
       err => {
         console.log('something went terribly wrong');

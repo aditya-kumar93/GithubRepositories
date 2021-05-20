@@ -8,6 +8,7 @@ import { FetchRepoService } from './fetch-repo-service.service';
 import { RepositoryCardComponent } from './repository-card/repository-card.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserCardComponent } from './user-card/user-card.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UserCardComponent } from './user-card/user-card.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+	FormsModule
   ],
   providers: [FetchRepoService],
   bootstrap: [AppComponent]

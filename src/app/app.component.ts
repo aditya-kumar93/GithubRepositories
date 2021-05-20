@@ -8,7 +8,18 @@ import { FetchRepoService } from './fetch-repo-service.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+	constructor(private fetchRepoService:  FetchRepoService){
+
+	}
   title = 'GithubRepositories';
+  userName: string;
+  
+
+	searchUserName(){
+
+		this.fetchRepoService.searchUserName(this.userName);
+	}
   
 
   
