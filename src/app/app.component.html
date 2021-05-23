@@ -1,16 +1,25 @@
 <!-- 
 <router-outlet></router-outlet> -->
-<div class="container">
-	<div  class="d-flex align-center">
-		<label>Enter username</label>
-		<input type="text" placeholder="Username" [(ngModel)]="userName" aria-label="Username/">
-		<button class="btn btn-success" (click)="searchUserName()">Search</button>
+<div class="container main-view-container">
+	<div  class="d-flex align-center justify-content-center search-bar align-items-center">
+		<label class="mx-2">Enter User Name for Github: </label>
+		<input class="mx-2" type="text" placeholder="Username" [(ngModel)]="userName" aria-label="Username/">
+		<button class="btn btn-success btn-small mx-2" (click)="searchUserName()">Search</button>
 	</div>
-  <div class="d-block mx-5">
-    <app-user-card></app-user-card>
-    </div>
-    <div class="d-block mx-5">
-      <app-repository-card></app-repository-card>
-    </div>
+	<div class="d-flex main-view-user-repos flex-wrap" *ngIf="isAValidUser else Error">
+		<div class="mx-5" >
+			<app-user-card [userData]="userData"></app-user-card>
+		</div>
+		<div class="mx-5">
+			<app-repository-card [repos]="userRepositories" [maxPages]="maxpages" (onPageChange)="getRepoData($event)"></app-repository-card>
+		</div>
+	</div>
+
+	<ng-template #Error>
+		<div class="error-template justify-content-center">
+			<h4>The user you've searched for does not exist. Please search for some other user</h4>
+		</div>
+	</ng-template>
+  	
 </div>
 

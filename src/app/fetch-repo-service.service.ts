@@ -4,6 +4,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 const getuserUrl = "https://api.github.com/users/";
 
+export interface IUserRepository {
+	userId: string,
+	name: string,
+	description: string,
+	languages: string[]
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -17,26 +24,21 @@ export class FetchRepoService {
 	constructor(private http: HttpClient) {
 	}
 
-	searchUserName(val: string) {
 
-		this.userName.next(val);
-		debugger;
-	}
-
-	getUserViaUserName(): any {
+	getUserViaUserName(val: string): Observable<any> {
 	
-		 this.http.get(getuserUrl + this.userName.value).subscribe(_ =>{
-			
-			this.userDetails = _;
-			this.getUserRepos(1);
-		},err =>{
-			this.userDetails = 'no user exists';
-		});
+		this.userName.next(val);
+		return this.http.get(getuserUrl + this.userName.value);
 	}
 
 	getUserRepos(page: number): Observable<any> {
 		
 		return this.http.get(getuserUrl + this.userName.value + '/repos?per_page=6&page='+page);
 		
+	}
+
+	getRepoLanguages(path: string): Observable<any>{
+
+		return this.http.get(path);
 	}
 }

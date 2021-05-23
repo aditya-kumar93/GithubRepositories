@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FetchRepoService } from '../fetch-repo-service.service';
 
 @Component({
@@ -8,27 +8,12 @@ import { FetchRepoService } from '../fetch-repo-service.service';
 })
 export class UserCardComponent implements OnInit {
 
-  userData: any;
+  @Input() userData: any;
   constructor(private fetchRepoService: FetchRepoService) {
   }
 
   ngOnInit(): void {
-
-	  this.fetchRepoService.userName$.subscribe(_ => {
-
-		  this.getUserData();
-	  });
+	 
   }
 
-  getUserData() {
-    this.fetchRepoService.getUserViaUserName()
-    .subscribe(
-      _ => {
-        this.userData = _;
-      },
-      err => {
-        console.log('something went terribly wrong');
-      }
-    );
-  }
 }
