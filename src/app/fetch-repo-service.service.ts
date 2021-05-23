@@ -11,6 +11,16 @@ export interface IUserRepository {
 	languages: string[]
 }
 
+export interface IUserDetails{
+
+	name: string;
+	bio: string;
+	avatarUrl: string;
+	twitterHandle: string,
+	location: string,
+	gitUrl : string
+}
+
 @Injectable({
 	providedIn: 'root'
 })

@@ -1,11 +1,13 @@
 <div class="user-data-container d-flex m-5" *ngIf="userData">
     <div class="user-gravatar">
-        <img src="{{userData?.avatar_url}}" />
+        <img src="{{userData?.avatarUrl}}" />
     </div>
     <div class="user-details d-block align-self-center ml-5">
         <h6>{{userData?.name}}</h6>
+		<div>{{userData.bio}}</div>
         <div><i class="come icon class"></i>{{userData?.location}}</div>
-        <div> {{userData?.twitter_username}}</div>
+        <div *ngIf="userData?.twitterHandle">Twitter:  {{userData?.twitterHandle}}</div>
+		<div><a href="{{userData?.gitUrl}}">{{userData?.gitUrl}}</a></div>
     </div>
 	<hr />
 </div>

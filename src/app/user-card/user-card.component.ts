@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FetchRepoService } from '../fetch-repo-service.service';
+import { FetchRepoService, IUserDetails } from '../fetch-repo-service.service';
 
 @Component({
   selector: 'app-user-card',
@@ -8,7 +8,7 @@ import { FetchRepoService } from '../fetch-repo-service.service';
 })
 export class UserCardComponent implements OnInit {
 
-  @Input() userData: any;
+	@Input() userData: IUserDetails;
   constructor(private fetchRepoService: FetchRepoService) {
   }
 

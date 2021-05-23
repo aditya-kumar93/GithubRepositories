@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { RepositoryCardComponent } from './repository-card/repository-card.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserCardComponent } from './user-card/user-card.component';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-	FormsModule
+	NgxSpinnerModule,
+	FormsModule,
+	BrowserAnimationsModule
   ],
   providers: [FetchRepoService],
   bootstrap: [AppComponent]
