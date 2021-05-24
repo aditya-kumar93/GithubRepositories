@@ -1,11 +1,41 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { of } from 'rxjs';
+import { Observable, Observer, of } from 'rxjs';
 import { AppComponent } from './app.component';
-import { FetchRepoService } from './fetch-repo-service.service';
+import { FetchRepoService, IUserRepository } from './fetch-repo-service.service';
 import {delay} from 'rxjs/operators';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+let mockData = {
+	name: 'Tony Stark',
+	bio: 'iron man',
+	avatarUrl: 'you already know it',
+	twitterHandle: 'i_heart_ironman',
+	location: 'New York',
+	gitUrl: 'private repo baby'
+};
+
+class MockContactService {
+
+	getUserViaUserName(username) {
+		return Observable.create((observer: Observer<any>) => {
+			observer.next(mockData);
+		});
+	}
+
+	getUserRepos(){
+		return Observable.create((observer: Observer<any[]>)=>{
+			observer.next([{repo: 'repo1'},{repo:'repo2'}]);
+		});
+	}
+
+	getRepoLanguages(){
+		return Observable.create((observer: Observer<any[]>) => {
+			observer.next(['angular','java','python']);
+		});
+	}
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -18,7 +48,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        FetchRepoService,
+		  { provide: FetchRepoService, useClass: MockContactService },
         NgxSpinnerService
       ]
     }).compileComponents();
@@ -36,31 +66,28 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('GithubRepositories');
   });
 
-  it('should return user git details',fakeAsync(()=>{
-    const fixture = TestBed.createComponent(AppComponent);
-    let component = fixture.componentInstance;
-    component.userName = 'aditya-kr';
-    let fetchRepoService = fixture.debugElement.componentInstance.injector.get(FetchRepoService);
-    let stub = spyOn(fetchRepoService,"getUserViaUserName").and.callFake(() =>{
-      return of({name: 'Tony Stark',
-        bio: 'iron man',
-        avatarUrl: 'you already know it',
-        twitterHandle: 'i_heart_ironman',
-        location: 'New York',
-        gitUrl : 'private repo baby'}).pipe(delay(300));
-    });
-    component.searchUserName();
-    tick(300);
+  it('should check if service method for getting user details has been trigerred ',fakeAsync(()=>{
+    let fixture = TestBed.createComponent(AppComponent);
+	let component = fixture.debugElement.componentInstance;
+	let element = fixture.debugElement.nativeElement;
 
-    expect(component.userData).toEqual({name: 'Tony Stark',
-    bio: 'iron man',
-    avatarUrl: 'you already know it',
-    twitterHandle: 'i_heart_ironman',
-    location: 'New York',
-    gitUrl : 'private repo baby'});
+	  spyOn(component.fetchRepoService, 'getUserViaUserName').and.callThrough();
+	  component.searchUserName();
+	  flush();
+	  expect(component.fetchRepoService.getUserViaUserName).toEqual(mockData);
 
-    expect(component.isAValidUser).toEqual(true);
+  }));
 
+	it('should check if method for fetching repositories details have been trigerred', fakeAsync(() => {
+		let fixture = TestBed.createComponent(AppComponent);
+		let component = fixture.debugElement.componentInstance;
+		let element = fixture.debugElement.nativeElement;
 
-  }))
+		spyOn(component.fetchRepoService, 'getUserRepos').and.callThrough();
+		component.getRepoData();
+		flush();
+		expect(component.fetchRepoService.getUserRepos).toHaveBeenCalled();
+
+	}));
+
 });
